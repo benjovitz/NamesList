@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,7 +11,7 @@ public class NamesList {
         names = new ArrayList<>();
     }
 
-    public void startUserInterface() {
+    public void startUserInterface() throws FileNotFoundException {
         System.out.println("""
                 Welcome to the NamesList - enterprise edition.
                 ----------------------------------------------
@@ -35,7 +37,7 @@ public class NamesList {
     private void showMenu() {
         System.out.println("""
                 1) Display list of names
-                2) Load list of names (not implemented)
+                2) Load list of names
                 3) Save list of names (not implemented)
                 4) Enter names
                 0) Exit
@@ -65,9 +67,23 @@ public class NamesList {
         System.out.println("NOT IMPLEMENTED");
     }
 
-    private void loadListOfNames() {
-        // TODO: Implement load of the names list from a file
-        System.out.println("NOT IMPLEMENTED");
+    private void loadListOfNames() throws FileNotFoundException {
+        /*String choice="hej";
+        Scanner keyboard = new Scanner(System.in);
+        choice=keyboard.nextLine();
+        Scanner sc = new Scanner(new File(choice));*/
+        Scanner sc = new Scanner(new File("names.txt"));
+
+        String name = "-nothing yet-";
+        while(!name.isBlank() && sc.hasNextLine()) {
+            name = sc.nextLine();
+            if(!name.isBlank()) {
+                names.add(name);
+                //System.out.println(name + " added to the list, enter another, or empty to quit");
+            }
+        }
+        System.out.println("Done");
+
     }
 
     private void displayListOfNames() {
@@ -92,7 +108,7 @@ public class NamesList {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         NamesList app = new NamesList();
         app.startUserInterface();
     }
